@@ -97,16 +97,42 @@
   <h1 class="font-bold text-5xl text-center mt-5 mb-5">
   Choose <span class="text-green-600">Your</span> Trees
   </h1>
+   <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
- <div id="level-container"></div>
+    <!-- Categories -->
+    <div class="col-span-3 order-1 md:order-1">
+      <h2 class="text-xl font-bold mb-4">Categories</h2>
+      <div id="categories"></div>
+    </div>
+
+    <!-- Tree Cards -->
+    <div class="col-span-6 order-2 md:order-2">
+      <div id="tree-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      <div id="loading" class="text-center py-6 hidden">🌱 Loading...</div>
+    </div>
+
+    <!-- Cart -->
+    <div class="col-span-3 order-3 md:order-3 mt-6 md:mt-0">
+      <h2 class="text-xl font-bold mb-4">🛒 Cart</h2>
+      <ul id="cart-list" class="space-y-2"></ul>
+      <p class="mt-4 font-semibold">Total:<span id="cart-total">৳0</span></p>
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg max-w-lg w-full">
+      <div class="flex justify-between items-center mb-4">
+        <h3 id="modal-title" class="text-lg font-bold"></h3>
+        <button onclick="closeModal()" class="text-gray-600">✕</button>
+      </div>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
 
  </section>
-
-
-
-
-
-
 
 
 

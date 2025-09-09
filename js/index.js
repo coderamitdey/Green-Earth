@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let cart = [];
 
-  // ----------------- Fetch Functions -----------------
+  //Fetch Functions
   async function fetchCategories() {
     const res = await fetch("https://openapi.programming-hero.com/api/categories");
     const data = await res.json();
@@ -32,10 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchPlantById(id) {
     const res = await fetch(`https://openapi.programming-hero.com/api/plant/${id}`);
     const data = await res.json();
-    return data.plants || data; // fallback
+    return data.plants || data;
   }
 
-  // ----------------- UI Functions -----------------
+  // UI Functions
   function createCategoryButton(cat, isAll=false) {
     const btn = document.createElement("button");
     btn.textContent = isAll ? "All Trees" : cat.category_name;
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     treeListEl.innerHTML = "";
     loadingEl.classList.remove("hidden");
 
-    // Highlight active button
+    //active button
     categoriesEl.querySelectorAll("button").forEach(b=>{
       b.classList.remove("bg-green-600","text-white");
       b.classList.add("border");
@@ -98,19 +98,26 @@ document.addEventListener("DOMContentLoaded", () => {
       desc.className = "text-sm text-gray-600";
       card.appendChild(desc);
 
-      const cat = document.createElement("p");
-      cat.textContent = "Category: " + (tree.category || "Unknown");
-      cat.className = "text-xs text-gray-400 mt-1";
-      card.appendChild(cat);
+      //CATEGORY BADGE + PRICE ROW 
+      const row = document.createElement("div");
+      row.className = "flex justify-between items-center mt-2";
+
+      const cat = document.createElement("span");
+      cat.textContent = tree.category || "Unknown";
+      cat.className = "inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full cursor-pointer";
+      cat.onclick = () => showDetails(tree.id);
 
       const price = document.createElement("p");
       price.textContent = "৳" + (tree.price || 0);
-      price.className = "font-semibold mt-2";
-      card.appendChild(price);
+      price.className = "font-semibold";
+
+      row.appendChild(cat);
+      row.appendChild(price);
+      card.appendChild(row);
 
       const btnAdd = document.createElement("button");
       btnAdd.textContent = "Add to Cart";
-      btnAdd.className = "mt-auto bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700";
+      btnAdd.className = "mt-3 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700";
       btnAdd.onclick = () => addToCart(tree.id, tree.name, tree.price || 0);
       card.appendChild(btnAdd);
 
@@ -118,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ----------------- Cart -----------------
+  // Cart 
   function addToCart(id, name, price) {
     cart.push({id, name, price});
     renderCart();
@@ -147,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cartTotalEl.textContent = "৳" + total;
   }
 
-  // ----------------- Modal -----------------
+  // Modal 
   async function showDetails(id){
     const plant = await fetchPlantById(id);
     modalTitle.textContent = plant.name || "No Name";
@@ -161,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.closeModal = ()=> { modal.classList.add("hidden"); }
 
-  // ----------------- Init -----------------
+  // Init
   loadCategories();
   loadTrees();
 });
